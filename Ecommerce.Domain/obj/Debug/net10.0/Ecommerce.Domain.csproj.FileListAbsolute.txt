@@ -1,0 +1,22 @@
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Domain/bin/Debug/net10.0/Ecommerce.Domain.deps.json
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Domain/bin/Debug/net10.0/Ecommerce.Domain.dll
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Domain/bin/Debug/net10.0/Ecommerce.Domain.pdb
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Domain/obj/Debug/net10.0/Ecommerce.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Domain/obj/Debug/net10.0/Ecommerce.Domain.AssemblyInfoInputs.cache
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Domain/obj/Debug/net10.0/Ecommerce.Domain.AssemblyInfo.cs
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Domain/obj/Debug/net10.0/Ecommerce.Domain.csproj.CoreCompileInputs.cache
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Domain/obj/Debug/net10.0/Ecommerce.Domain.dll
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Domain/obj/Debug/net10.0/refint/Ecommerce.Domain.dll
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Domain/obj/Debug/net10.0/Ecommerce.Domain.pdb
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Domain/obj/Debug/net10.0/ref/Ecommerce.Domain.dll
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Domain/bin/Debug/net10.0/Ecommerce.Domain.deps.json
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Domain/bin/Debug/net10.0/Ecommerce.Domain.dll
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Domain/bin/Debug/net10.0/Ecommerce.Domain.pdb
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Domain/obj/Debug/net10.0/Ecommerce.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Domain/obj/Debug/net10.0/Ecommerce.Domain.AssemblyInfoInputs.cache
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Domain/obj/Debug/net10.0/Ecommerce.Domain.AssemblyInfo.cs
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Domain/obj/Debug/net10.0/Ecommerce.Domain.csproj.CoreCompileInputs.cache
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Domain/obj/Debug/net10.0/Ecommerce.Domain.dll
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Domain/obj/Debug/net10.0/refint/Ecommerce.Domain.dll
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Domain/obj/Debug/net10.0/Ecommerce.Domain.pdb
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Domain/obj/Debug/net10.0/ref/Ecommerce.Domain.dll

@@ -1,0 +1,38 @@
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Infrastructure/bin/Debug/net10.0/Ecommerce.Infrastructure.deps.json
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Infrastructure/bin/Debug/net10.0/Ecommerce.Infrastructure.runtimeconfig.json
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Infrastructure/bin/Debug/net10.0/Ecommerce.Infrastructure.dll
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Infrastructure/bin/Debug/net10.0/Ecommerce.Infrastructure.pdb
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Infrastructure/bin/Debug/net10.0/Ecommerce.Application.dll
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Infrastructure/bin/Debug/net10.0/Ecommerce.Domain.dll
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Infrastructure/bin/Debug/net10.0/Ecommerce.Domain.pdb
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Infrastructure/bin/Debug/net10.0/Ecommerce.Application.pdb
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Infrastructure/obj/Debug/net10.0/Ecommerce.Infrastructure.csproj.AssemblyReference.cache
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Infrastructure/obj/Debug/net10.0/Ecommerce.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Infrastructure/obj/Debug/net10.0/Ecommerce.Infrastructure.AssemblyInfoInputs.cache
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Infrastructure/obj/Debug/net10.0/Ecommerce.Infrastructure.AssemblyInfo.cs
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Infrastructure/obj/Debug/net10.0/Ecommerce.Infrastructure.csproj.CoreCompileInputs.cache
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Infrastructure/obj/Debug/net10.0/Ecommerc.43E367F3.Up2Date
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Infrastructure/obj/Debug/net10.0/Ecommerce.Infrastructure.dll
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Infrastructure/obj/Debug/net10.0/refint/Ecommerce.Infrastructure.dll
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Infrastructure/obj/Debug/net10.0/Ecommerce.Infrastructure.pdb
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Infrastructure/obj/Debug/net10.0/Ecommerce.Infrastructure.genruntimeconfig.cache
+/Users/enzosena/Desktop/admin-dev/pasta sem título/Ecommerce.Infrastructure/obj/Debug/net10.0/ref/Ecommerce.Infrastructure.dll
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Infrastructure/bin/Debug/net10.0/Ecommerce.Infrastructure.deps.json
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Infrastructure/bin/Debug/net10.0/Ecommerce.Infrastructure.runtimeconfig.json
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Infrastructure/bin/Debug/net10.0/Ecommerce.Infrastructure.dll
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Infrastructure/bin/Debug/net10.0/Ecommerce.Infrastructure.pdb
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Infrastructure/bin/Debug/net10.0/Ecommerce.Application.dll
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Infrastructure/bin/Debug/net10.0/Ecommerce.Domain.dll
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Infrastructure/bin/Debug/net10.0/Ecommerce.Domain.pdb
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Infrastructure/bin/Debug/net10.0/Ecommerce.Application.pdb
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Infrastructure/obj/Debug/net10.0/Ecommerce.Infrastructure.csproj.AssemblyReference.cache
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Infrastructure/obj/Debug/net10.0/Ecommerce.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Infrastructure/obj/Debug/net10.0/Ecommerce.Infrastructure.AssemblyInfoInputs.cache
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Infrastructure/obj/Debug/net10.0/Ecommerce.Infrastructure.AssemblyInfo.cs
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Infrastructure/obj/Debug/net10.0/Ecommerce.Infrastructure.csproj.CoreCompileInputs.cache
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Infrastructure/obj/Debug/net10.0/Ecommerc.43E367F3.Up2Date
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Infrastructure/obj/Debug/net10.0/Ecommerce.Infrastructure.dll
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Infrastructure/obj/Debug/net10.0/refint/Ecommerce.Infrastructure.dll
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Infrastructure/obj/Debug/net10.0/Ecommerce.Infrastructure.pdb
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Infrastructure/obj/Debug/net10.0/Ecommerce.Infrastructure.genruntimeconfig.cache
+/Users/enzosena/Desktop/admin-dev/Ecommerce/Ecommerce.Infrastructure/obj/Debug/net10.0/ref/Ecommerce.Infrastructure.dll
