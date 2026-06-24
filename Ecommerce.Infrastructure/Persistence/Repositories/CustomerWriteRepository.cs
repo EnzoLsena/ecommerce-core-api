@@ -12,6 +12,11 @@ public sealed class CustomerWriteRepository(EcommerceDbContext dbContext)
             customer => customer.Id == id,
             cancellationToken);
 
+    public Task<Customer?> GetByEmailAsync(string email, CancellationToken cancellationToken) =>
+        dbContext.Customers.SingleOrDefaultAsync(
+            customer => customer.Email == email.Trim(),
+            cancellationToken);
+
     public async Task AddAsync(Customer customer, CancellationToken cancellationToken)
     {
         dbContext.Customers.Add(customer);

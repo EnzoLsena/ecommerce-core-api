@@ -5,6 +5,7 @@ namespace Ecommerce.Application.Customers.Abstractions;
 public interface ICustomerWriteRepository
 {
     Task<Customer?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+    Task<Customer?> GetByEmailAsync(string email, CancellationToken cancellationToken);
     Task AddAsync(Customer customer, CancellationToken cancellationToken);
     Task UpdateAsync(Customer customer, CancellationToken cancellationToken);
     Task DeleteAsync(Customer customer, CancellationToken cancellationToken);

@@ -1,6 +1,7 @@
 using AutoMapper;
 using Ecommerce.Application.Customers.Abstractions;
 using Ecommerce.Application.Customers.Models;
+using Ecommerce.Domain.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -23,6 +24,13 @@ public sealed class UpdateCustomerCommandHandler(
             logger.LogWarning("Cliente {CustomerId} não encontrado para atualização", request.Id);
             return false;
         }
+
+        var customerWithEmail = await writeRepository.GetByEmailAsync(
+            request.Email,
+            cancellationToken);
+
+        if (customerWithEmail is not null && customerWithEmail.Id != request.Id)
+            throw new DomainException("Já existe um cliente cadastrado com este e-mail.");
 
         customer.ChangeDetails(request.Name, request.Email);
         await writeRepository.UpdateAsync(customer, cancellationToken);
