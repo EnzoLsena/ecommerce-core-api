@@ -8,6 +8,11 @@ public interface IOrderReadStore
     Task TryUpsertAsync(OrderReadModel order, CancellationToken cancellationToken);
     Task TryDeleteAsync(Guid id, CancellationToken cancellationToken);
     Task<OrderReadModel?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+    Task<PagedResult<OrderReadModel>> GetByCustomerAsync(
+        Guid customerId,
+        int page,
+        int pageSize,
+        CancellationToken cancellationToken);
     Task<PagedResult<OrderReadModel>> GetPagedAsync(
         int page,
         int pageSize,

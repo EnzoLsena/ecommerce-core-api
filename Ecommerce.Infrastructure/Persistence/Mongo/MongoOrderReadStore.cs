@@ -63,6 +63,35 @@ public sealed class MongoOrderReadStore(
         return document is null ? null : Map(document);
     }
 
+    public async Task<PagedResult<OrderReadModel>> GetByCustomerAsync(
+        Guid customerId,
+        int page,
+        int pageSize,
+        CancellationToken cancellationToken)
+    {
+        var filter = Builders<OrderDocument>.Filter.Eq(
+            order => order.Customer.Id,
+            customerId);
+
+        var totalItems = await _orders.CountDocumentsAsync(
+            filter,
+            cancellationToken: cancellationToken);
+
+        var documents = await _orders
+            .Find(filter)
+            .SortByDescending(order => order.CreatedAt)
+            .ThenBy(order => order.Id)
+            .Skip((page - 1) * pageSize)
+            .Limit(pageSize)
+            .ToListAsync(cancellationToken);
+
+        return new PagedResult<OrderReadModel>(
+            documents.Select(Map).ToArray(),
+            totalItems,
+            page,
+            pageSize);
+    }
+
     public async Task<PagedResult<OrderReadModel>> GetPagedAsync(
         int page,
         int pageSize,

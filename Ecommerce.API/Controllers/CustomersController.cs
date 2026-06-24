@@ -4,6 +4,7 @@ using Ecommerce.Application.Customers.Commands.PatchCustomer;
 using Ecommerce.Application.Customers.Commands.UpdateCustomer;
 using Ecommerce.Application.Customers.Queries.GetCustomerById;
 using Ecommerce.Application.Customers.Queries.GetCustomers;
+using Ecommerce.Application.Orders.Queries.GetOrdersByCustomer;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -47,6 +48,19 @@ public sealed class CustomersController(ISender mediator) : ControllerBase
             cancellationToken);
 
         return Ok(customers);
+    }
+
+    [HttpGet("{id:guid}/orders")]
+    public async Task<IActionResult> GetOrders(
+        Guid id,
+        [FromQuery] GetCustomerOrdersRequest request,
+        CancellationToken cancellationToken)
+    {
+        var orders = await mediator.Send(
+            new GetOrdersByCustomerQuery(id, request.Page, request.PageSize),
+            cancellationToken);
+
+        return orders is null ? NotFound() : Ok(orders);
     }
 
     [HttpPut("{id:guid}")]
@@ -95,6 +109,12 @@ public sealed record UpdateCustomerRequest(string Name, string Email);
 public sealed record PatchCustomerRequest(string? Name, string? Email);
 
 public sealed class GetCustomersRequest
+{
+    public int Page { get; init; } = 1;
+    public int PageSize { get; init; } = 20;
+}
+
+public sealed class GetCustomerOrdersRequest
 {
     public int Page { get; init; } = 1;
     public int PageSize { get; init; } = 20;
