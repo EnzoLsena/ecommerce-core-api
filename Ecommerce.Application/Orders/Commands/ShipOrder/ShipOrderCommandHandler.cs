@@ -1,4 +1,5 @@
 using AutoMapper;
+using Ecommerce.Application.Common.Abstractions;
 using Ecommerce.Application.Orders.Abstractions;
 using Ecommerce.Application.Orders.Models;
 using MediatR;
@@ -8,6 +9,7 @@ namespace Ecommerce.Application.Orders.Commands.ShipOrder;
 
 public sealed class ShipOrderCommandHandler(
     IOrderWriteRepository writeRepository,
+    IUnitOfWork unitOfWork,
     IOrderReadStore readStore,
     IMapper mapper,
     ILogger<ShipOrderCommandHandler> logger) : IRequestHandler<ShipOrderCommand, bool>
@@ -24,6 +26,7 @@ public sealed class ShipOrderCommandHandler(
 
         order.MarkAsShipped();
         await writeRepository.UpdateAsync(order, cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
         await readStore.TryUpsertAsync(mapper.Map<OrderReadModel>(order), cancellationToken);
 
         logger.LogInformation("Pedido {OrderId} enviado", order.Id);

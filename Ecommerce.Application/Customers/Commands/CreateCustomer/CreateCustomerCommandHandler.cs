@@ -1,4 +1,5 @@
 using AutoMapper;
+using Ecommerce.Application.Common.Abstractions;
 using Ecommerce.Application.Customers.Abstractions;
 using Ecommerce.Application.Customers.Models;
 using Ecommerce.Domain.Entities;
@@ -10,6 +11,7 @@ namespace Ecommerce.Application.Customers.Commands.CreateCustomer;
 
 public sealed class CreateCustomerCommandHandler(
     ICustomerWriteRepository writeRepository,
+    IUnitOfWork unitOfWork,
     ICustomerReadStore readStore,
     IMapper mapper,
     ILogger<CreateCustomerCommandHandler> logger) : IRequestHandler<CreateCustomerCommand, Guid>
@@ -24,6 +26,7 @@ public sealed class CreateCustomerCommandHandler(
         var customer = new Customer(request.Name, request.Email);
 
         await writeRepository.AddAsync(customer, cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
         await readStore.TryUpsertAsync(
             mapper.Map<CustomerReadModel>(customer),
             cancellationToken);

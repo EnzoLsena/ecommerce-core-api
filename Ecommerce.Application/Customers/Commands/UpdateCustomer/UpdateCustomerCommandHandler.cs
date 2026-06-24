@@ -1,4 +1,5 @@
 using AutoMapper;
+using Ecommerce.Application.Common.Abstractions;
 using Ecommerce.Application.Customers.Abstractions;
 using Ecommerce.Application.Customers.Models;
 using Ecommerce.Domain.Exceptions;
@@ -9,6 +10,7 @@ namespace Ecommerce.Application.Customers.Commands.UpdateCustomer;
 
 public sealed class UpdateCustomerCommandHandler(
     ICustomerWriteRepository writeRepository,
+    IUnitOfWork unitOfWork,
     ICustomerReadStore readStore,
     IMapper mapper,
     ILogger<UpdateCustomerCommandHandler> logger) : IRequestHandler<UpdateCustomerCommand, bool>
@@ -34,6 +36,7 @@ public sealed class UpdateCustomerCommandHandler(
 
         customer.ChangeDetails(request.Name, request.Email);
         await writeRepository.UpdateAsync(customer, cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
         await readStore.TryUpsertAsync(
             mapper.Map<CustomerReadModel>(customer),
             cancellationToken);

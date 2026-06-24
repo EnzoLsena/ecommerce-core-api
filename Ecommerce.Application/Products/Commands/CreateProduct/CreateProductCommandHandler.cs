@@ -1,4 +1,5 @@
 using AutoMapper;
+using Ecommerce.Application.Common.Abstractions;
 using Ecommerce.Application.Products.Abstractions;
 using Ecommerce.Application.Products.Models;
 using Ecommerce.Domain.Entities;
@@ -9,6 +10,7 @@ namespace Ecommerce.Application.Products.Commands.CreateProduct;
 
 public sealed class CreateProductCommandHandler(
     IProductWriteRepository writeRepository,
+    IUnitOfWork unitOfWork,
     IProductReadStore readStore,
     IMapper mapper,
     ILogger<CreateProductCommandHandler> logger) : IRequestHandler<CreateProductCommand, Guid>
@@ -20,6 +22,7 @@ public sealed class CreateProductCommandHandler(
         var product = new Product(request.Name, request.Price);
 
         await writeRepository.AddAsync(product, cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         await readStore.TryUpsertAsync(
             mapper.Map<ProductReadModel>(product),

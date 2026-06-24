@@ -1,3 +1,4 @@
+using Ecommerce.Application.Common.Abstractions;
 using Ecommerce.Application.Products.Abstractions;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -6,6 +7,7 @@ namespace Ecommerce.Application.Products.Commands.DeleteProduct;
 
 public sealed class DeleteProductCommandHandler(
     IProductWriteRepository writeRepository,
+    IUnitOfWork unitOfWork,
     IProductReadStore readStore,
     ILogger<DeleteProductCommandHandler> logger) : IRequestHandler<DeleteProductCommand, bool>
 {
@@ -25,6 +27,7 @@ public sealed class DeleteProductCommandHandler(
         }
 
         await writeRepository.DeleteAsync(product, cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
         await readStore.TryDeleteAsync(product.Id, cancellationToken);
 
         logger.LogInformation(

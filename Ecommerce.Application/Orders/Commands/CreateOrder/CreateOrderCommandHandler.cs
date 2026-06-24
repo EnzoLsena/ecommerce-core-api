@@ -1,4 +1,5 @@
 using AutoMapper;
+using Ecommerce.Application.Common.Abstractions;
 using Ecommerce.Application.Orders.Abstractions;
 using Ecommerce.Application.Orders.Models;
 using Ecommerce.Domain.Entities;
@@ -9,6 +10,7 @@ namespace Ecommerce.Application.Orders.Commands.CreateOrder;
 
 public sealed class CreateOrderCommandHandler(
     IOrderWriteRepository writeRepository,
+    IUnitOfWork unitOfWork,
     IOrderReadStore readStore,
     IMapper mapper,
     ILogger<CreateOrderCommandHandler> logger) : IRequestHandler<CreateOrderCommand, Guid?>
@@ -25,6 +27,7 @@ public sealed class CreateOrderCommandHandler(
 
         var order = new Order(request.CustomerId);
         await writeRepository.AddAsync(order, cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         var savedOrder = await writeRepository.GetByIdAsync(order.Id, cancellationToken)
             ?? throw new InvalidOperationException("O pedido salvo não foi encontrado.");

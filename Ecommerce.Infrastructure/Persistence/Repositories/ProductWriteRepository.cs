@@ -12,21 +12,21 @@ public sealed class ProductWriteRepository(EcommerceDbContext dbContext)
             product => product.Id == id,
             cancellationToken);
 
-    public async Task AddAsync(Product product, CancellationToken cancellationToken)
+    public Task AddAsync(Product product, CancellationToken cancellationToken)
     {
         dbContext.Products.Add(product);
-        await dbContext.SaveChangesAsync(cancellationToken);
+        return Task.CompletedTask;
     }
 
-    public async Task UpdateAsync(Product product, CancellationToken cancellationToken)
+    public Task UpdateAsync(Product product, CancellationToken cancellationToken)
     {
         dbContext.Products.Update(product);
-        await dbContext.SaveChangesAsync(cancellationToken);
+        return Task.CompletedTask;
     }
 
-    public async Task DeleteAsync(Product product, CancellationToken cancellationToken)
+    public Task DeleteAsync(Product product, CancellationToken cancellationToken)
     {
         product.Delete();
-        await dbContext.SaveChangesAsync(cancellationToken);
+        return Task.CompletedTask;
     }
 }

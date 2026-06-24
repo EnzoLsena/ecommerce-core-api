@@ -1,4 +1,5 @@
 using AutoMapper;
+using Ecommerce.Application.Common.Abstractions;
 using Ecommerce.Application.Orders.Abstractions;
 using Ecommerce.Application.Orders.Models;
 using MediatR;
@@ -8,6 +9,7 @@ namespace Ecommerce.Application.Orders.Commands.UpdateOrderCustomer;
 
 public sealed class UpdateOrderCustomerCommandHandler(
     IOrderWriteRepository writeRepository,
+    IUnitOfWork unitOfWork,
     IOrderReadStore readStore,
     IMapper mapper,
     ILogger<UpdateOrderCustomerCommandHandler> logger) : IRequestHandler<UpdateOrderCustomerCommand, bool>
@@ -31,6 +33,7 @@ public sealed class UpdateOrderCustomerCommandHandler(
 
         order.UpdateCustomer(request.CustomerId);
         await writeRepository.UpdateAsync(order, cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         var updatedOrder = await writeRepository.GetByIdAsync(order.Id, cancellationToken)
             ?? throw new InvalidOperationException("O pedido atualizado não foi encontrado.");

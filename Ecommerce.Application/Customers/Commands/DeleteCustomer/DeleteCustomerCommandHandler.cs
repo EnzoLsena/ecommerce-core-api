@@ -1,3 +1,4 @@
+using Ecommerce.Application.Common.Abstractions;
 using Ecommerce.Application.Customers.Abstractions;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -6,6 +7,7 @@ namespace Ecommerce.Application.Customers.Commands.DeleteCustomer;
 
 public sealed class DeleteCustomerCommandHandler(
     ICustomerWriteRepository writeRepository,
+    IUnitOfWork unitOfWork,
     ICustomerReadStore readStore,
     ILogger<DeleteCustomerCommandHandler> logger) : IRequestHandler<DeleteCustomerCommand, bool>
 {
@@ -22,6 +24,7 @@ public sealed class DeleteCustomerCommandHandler(
         }
 
         await writeRepository.DeleteAsync(customer, cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
         await readStore.TryDeleteAsync(customer.Id, cancellationToken);
 
         logger.LogInformation("Cliente {CustomerId} excluído", customer.Id);

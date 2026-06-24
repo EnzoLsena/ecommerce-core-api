@@ -1,3 +1,4 @@
+using Ecommerce.Application.Common.Abstractions;
 using Ecommerce.Application.Orders.Abstractions;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -6,6 +7,7 @@ namespace Ecommerce.Application.Orders.Commands.DeleteOrder;
 
 public sealed class DeleteOrderCommandHandler(
     IOrderWriteRepository writeRepository,
+    IUnitOfWork unitOfWork,
     IOrderReadStore readStore,
     ILogger<DeleteOrderCommandHandler> logger) : IRequestHandler<DeleteOrderCommand, bool>
 {
@@ -20,6 +22,7 @@ public sealed class DeleteOrderCommandHandler(
         }
 
         await writeRepository.DeleteAsync(order, cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
         await readStore.TryDeleteAsync(order.Id, cancellationToken);
 
         logger.LogInformation("Pedido {OrderId} excluído", order.Id);

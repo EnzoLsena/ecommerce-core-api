@@ -1,4 +1,5 @@
 using AutoMapper;
+using Ecommerce.Application.Common.Abstractions;
 using Ecommerce.Application.Products.Abstractions;
 using Ecommerce.Application.Products.Models;
 using MediatR;
@@ -8,6 +9,7 @@ namespace Ecommerce.Application.Products.Commands.UpdateProduct;
 
 public sealed class UpdateProductCommandHandler(
     IProductWriteRepository writeRepository,
+    IUnitOfWork unitOfWork,
     IProductReadStore readStore,
     IMapper mapper,
     ILogger<UpdateProductCommandHandler> logger) : IRequestHandler<UpdateProductCommand, bool>
@@ -29,6 +31,7 @@ public sealed class UpdateProductCommandHandler(
 
         product.ChangeDetails(request.Name, request.Price);
         await writeRepository.UpdateAsync(product, cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         await readStore.TryUpsertAsync(
             mapper.Map<ProductReadModel>(product),

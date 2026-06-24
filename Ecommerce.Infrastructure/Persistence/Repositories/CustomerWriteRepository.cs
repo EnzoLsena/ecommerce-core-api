@@ -17,21 +17,21 @@ public sealed class CustomerWriteRepository(EcommerceDbContext dbContext)
             customer => customer.Email == email.Trim(),
             cancellationToken);
 
-    public async Task AddAsync(Customer customer, CancellationToken cancellationToken)
+    public Task AddAsync(Customer customer, CancellationToken cancellationToken)
     {
         dbContext.Customers.Add(customer);
-        await dbContext.SaveChangesAsync(cancellationToken);
+        return Task.CompletedTask;
     }
 
-    public async Task UpdateAsync(Customer customer, CancellationToken cancellationToken)
+    public Task UpdateAsync(Customer customer, CancellationToken cancellationToken)
     {
         dbContext.Customers.Update(customer);
-        await dbContext.SaveChangesAsync(cancellationToken);
+        return Task.CompletedTask;
     }
 
-    public async Task DeleteAsync(Customer customer, CancellationToken cancellationToken)
+    public Task DeleteAsync(Customer customer, CancellationToken cancellationToken)
     {
         customer.Delete();
-        await dbContext.SaveChangesAsync(cancellationToken);
+        return Task.CompletedTask;
     }
 }
