@@ -4,9 +4,9 @@ WORKDIR /src
 
 COPY . .
 
-RUN dotnet restore "Ecommerce.API/Ecommerce.API.csproj"
+RUN dotnet restore "src/Ecommerce.API/Ecommerce.API.csproj"
 
-RUN dotnet publish "Ecommerce.API/Ecommerce.API.csproj" \
+RUN dotnet publish "src/Ecommerce.API/Ecommerce.API.csproj" \
     -c Release \
     -o /app/publish \
     --no-restore
