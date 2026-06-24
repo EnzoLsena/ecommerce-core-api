@@ -16,6 +16,7 @@ public sealed class Order
         EnsureValidId(customerId, "Customer is required.");
 
         Id = Guid.NewGuid();
+        Code = Id.ToString("N").ToUpperInvariant();
         CustomerId = customerId;
         Status = OrderStatus.Started;
         CreatedAt = DateTime.UtcNow;
@@ -25,6 +26,11 @@ public sealed class Order
     public Guid Id { get; private set; }
     public Guid CustomerId { get; private set; }
     public OrderStatus Status { get; private set; }
+    public decimal TotalAmount { get; private set; }
+    public int TotalItems { get; private set; }
+    public string Code { get; private set; } = null!;
+    public DateTime? PaidAt { get; private set; }
+    public DateTime? CanceledAt { get; private set; }
     public IReadOnlyCollection<OrderItem> Items => _items.AsReadOnly();
     public DateTime CreatedAt { get; private set; }
     public DateTime UpdatedAt { get; private set; }
@@ -47,6 +53,7 @@ public sealed class Order
         else
             existingItem.Change(existingItem.Quantity + quantity, unitPrice);
 
+        RecalculateTotals();
         Touch();
     }
 
@@ -67,6 +74,7 @@ public sealed class Order
             ?? throw new DomainException("Order item was not found.");
 
         item.Change(quantity, unitPrice);
+        RecalculateTotals();
         Touch();
     }
 
@@ -76,6 +84,7 @@ public sealed class Order
             throw new DomainException("Only started or processed orders can be canceled.");
 
         Status = OrderStatus.Canceled;
+        CanceledAt = DateTime.UtcNow;
         Touch();
     }
 
@@ -85,6 +94,7 @@ public sealed class Order
             throw new DomainException("Only started orders can be marked as processed.");
 
         Status = OrderStatus.Processed;
+        PaidAt = DateTime.UtcNow;
         Touch();
     }
 
@@ -123,4 +133,10 @@ public sealed class Order
     }
 
     private void Touch() => UpdatedAt = DateTime.UtcNow;
+
+    private void RecalculateTotals()
+    {
+        TotalAmount = _items.Sum(item => item.Total);
+        TotalItems = _items.Sum(item => item.Quantity);
+    }
 }

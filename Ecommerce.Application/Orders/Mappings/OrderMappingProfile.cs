@@ -15,9 +15,6 @@ public sealed class OrderMappingProfile : Profile
                 nameof(OrderItemReadModel.ProductName),
                 options => options.MapFrom(item => item.Product.Name));
 
-        CreateMap<Order, OrderReadModel>()
-            .ForCtorParam(
-                nameof(OrderReadModel.Total),
-                options => options.MapFrom(order => order.Items.Sum(item => item.Total)));
+        CreateMap<Order, OrderReadModel>();
     }
 }

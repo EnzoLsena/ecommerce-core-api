@@ -18,6 +18,26 @@ public sealed class OrderEntityTypeConfiguration : IEntityTypeConfiguration<Orde
             .HasConversion<int>()
             .IsRequired();
 
+        builder.Property(order => order.TotalAmount)
+            .HasPrecision(18, 2)
+            .IsRequired();
+
+        builder.Property(order => order.TotalItems)
+            .IsRequired();
+
+        builder.Property(order => order.Code)
+            .HasMaxLength(32)
+            .IsRequired();
+
+        builder.HasIndex(order => order.Code)
+            .IsUnique();
+
+        builder.Property(order => order.PaidAt)
+            .HasColumnType("datetime2");
+
+        builder.Property(order => order.CanceledAt)
+            .HasColumnType("datetime2");
+
         builder.Property(order => order.CreatedAt)
             .HasColumnType("datetime2")
             .IsRequired();

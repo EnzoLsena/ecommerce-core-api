@@ -46,7 +46,18 @@ public sealed class OrdersController(ISender mediator) : ControllerBase
         CancellationToken cancellationToken)
     {
         var orders = await mediator.Send(
-            new GetOrdersQuery(request.Page, request.PageSize),
+            new GetOrdersQuery(
+                request.Page,
+                request.PageSize,
+                request.Code,
+                request.MinTotalAmount,
+                request.MaxTotalAmount,
+                request.MinTotalItems,
+                request.MaxTotalItems,
+                request.PaidFrom,
+                request.PaidTo,
+                request.CanceledFrom,
+                request.CanceledTo),
             cancellationToken);
 
         return Ok(orders);
@@ -137,4 +148,13 @@ public sealed class GetOrdersRequest
 {
     public int Page { get; init; } = 1;
     public int PageSize { get; init; } = 20;
+    public string? Code { get; init; }
+    public decimal? MinTotalAmount { get; init; }
+    public decimal? MaxTotalAmount { get; init; }
+    public int? MinTotalItems { get; init; }
+    public int? MaxTotalItems { get; init; }
+    public DateTime? PaidFrom { get; init; }
+    public DateTime? PaidTo { get; init; }
+    public DateTime? CanceledFrom { get; init; }
+    public DateTime? CanceledTo { get; init; }
 }

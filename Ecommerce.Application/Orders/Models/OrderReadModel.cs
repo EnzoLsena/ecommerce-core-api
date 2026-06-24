@@ -7,7 +7,11 @@ public sealed record OrderReadModel(
     OrderCustomerReadModel Customer,
     OrderStatus Status,
     IReadOnlyCollection<OrderItemReadModel> Items,
-    decimal Total,
+    decimal TotalAmount,
+    int TotalItems,
+    string Code,
+    DateTime? PaidAt,
+    DateTime? CanceledAt,
     DateTime CreatedAt,
     DateTime UpdatedAt);
 

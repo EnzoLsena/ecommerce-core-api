@@ -18,7 +18,11 @@ internal sealed class OrderDocument
     public IReadOnlyCollection<OrderItemDocument> Items { get; init; } = [];
 
     [BsonRepresentation(BsonType.Decimal128)]
-    public decimal Total { get; init; }
+    public decimal TotalAmount { get; init; }
+    public int TotalItems { get; init; }
+    public string Code { get; init; } = string.Empty;
+    public DateTime? PaidAt { get; init; }
+    public DateTime? CanceledAt { get; init; }
 
     public DateTime CreatedAt { get; init; }
     public DateTime UpdatedAt { get; init; }

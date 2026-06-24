@@ -11,5 +11,14 @@ public interface IOrderReadStore
     Task<PagedResult<OrderReadModel>> GetPagedAsync(
         int page,
         int pageSize,
+        string? code,
+        decimal? minTotalAmount,
+        decimal? maxTotalAmount,
+        int? minTotalItems,
+        int? maxTotalItems,
+        DateTime? paidFrom,
+        DateTime? paidTo,
+        DateTime? canceledFrom,
+        DateTime? canceledTo,
         CancellationToken cancellationToken);
 }

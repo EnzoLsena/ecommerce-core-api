@@ -66,9 +66,41 @@ public sealed class MongoOrderReadStore(
     public async Task<PagedResult<OrderReadModel>> GetPagedAsync(
         int page,
         int pageSize,
+        string? code,
+        decimal? minTotalAmount,
+        decimal? maxTotalAmount,
+        int? minTotalItems,
+        int? maxTotalItems,
+        DateTime? paidFrom,
+        DateTime? paidTo,
+        DateTime? canceledFrom,
+        DateTime? canceledTo,
         CancellationToken cancellationToken)
     {
-        var filter = Builders<OrderDocument>.Filter.Empty;
+        var filters = new List<FilterDefinition<OrderDocument>>();
+
+        if (!string.IsNullOrWhiteSpace(code))
+            filters.Add(Builders<OrderDocument>.Filter.Eq(order => order.Code, code.Trim().ToUpperInvariant()));
+        if (minTotalAmount.HasValue)
+            filters.Add(Builders<OrderDocument>.Filter.Gte(order => order.TotalAmount, minTotalAmount.Value));
+        if (maxTotalAmount.HasValue)
+            filters.Add(Builders<OrderDocument>.Filter.Lte(order => order.TotalAmount, maxTotalAmount.Value));
+        if (minTotalItems.HasValue)
+            filters.Add(Builders<OrderDocument>.Filter.Gte(order => order.TotalItems, minTotalItems.Value));
+        if (maxTotalItems.HasValue)
+            filters.Add(Builders<OrderDocument>.Filter.Lte(order => order.TotalItems, maxTotalItems.Value));
+        if (paidFrom.HasValue)
+            filters.Add(Builders<OrderDocument>.Filter.Gte(order => order.PaidAt, paidFrom.Value));
+        if (paidTo.HasValue)
+            filters.Add(Builders<OrderDocument>.Filter.Lte(order => order.PaidAt, paidTo.Value));
+        if (canceledFrom.HasValue)
+            filters.Add(Builders<OrderDocument>.Filter.Gte(order => order.CanceledAt, canceledFrom.Value));
+        if (canceledTo.HasValue)
+            filters.Add(Builders<OrderDocument>.Filter.Lte(order => order.CanceledAt, canceledTo.Value));
+
+        var filter = filters.Count == 0
+            ? Builders<OrderDocument>.Filter.Empty
+            : Builders<OrderDocument>.Filter.And(filters);
         var totalItems = await _orders.CountDocumentsAsync(
             filter,
             cancellationToken: cancellationToken);
@@ -108,7 +140,11 @@ public sealed class MongoOrderReadStore(
                 UnitPrice = item.UnitPrice,
                 Total = item.Total
             }).ToArray(),
-            Total = order.Total,
+            TotalAmount = order.TotalAmount,
+            TotalItems = order.TotalItems,
+            Code = order.Code,
+            PaidAt = order.PaidAt,
+            CanceledAt = order.CanceledAt,
             CreatedAt = order.CreatedAt,
             UpdatedAt = order.UpdatedAt
         };
@@ -128,7 +164,11 @@ public sealed class MongoOrderReadStore(
                 item.Quantity,
                 item.UnitPrice,
                 item.Total)).ToArray(),
-            document.Total,
+            document.TotalAmount,
+            document.TotalItems,
+            document.Code,
+            document.PaidAt,
+            document.CanceledAt,
             document.CreatedAt,
             document.UpdatedAt);
 }

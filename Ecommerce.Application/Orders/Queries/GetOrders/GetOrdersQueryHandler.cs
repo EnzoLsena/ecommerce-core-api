@@ -18,6 +18,15 @@ public sealed class GetOrdersQueryHandler(
         var result = await readStore.GetPagedAsync(
             request.Page,
             request.PageSize,
+            request.Code,
+            request.MinTotalAmount,
+            request.MaxTotalAmount,
+            request.MinTotalItems,
+            request.MaxTotalItems,
+            request.PaidFrom,
+            request.PaidTo,
+            request.CanceledFrom,
+            request.CanceledTo,
             cancellationToken);
 
         logger.LogInformation(
