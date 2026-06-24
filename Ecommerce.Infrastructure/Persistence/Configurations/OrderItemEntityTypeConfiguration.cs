@@ -12,6 +12,8 @@ public sealed class OrderItemEntityTypeConfiguration : IEntityTypeConfiguration<
 
         builder.HasKey(item => item.Id);
 
+        builder.HasQueryFilter(item => item.DeletedAt == null);
+
         builder.Property(item => item.Quantity)
             .IsRequired();
 

@@ -26,7 +26,7 @@ public sealed class ProductWriteRepository(EcommerceDbContext dbContext)
 
     public async Task DeleteAsync(Product product, CancellationToken cancellationToken)
     {
-        dbContext.Products.Remove(product);
+        product.Delete();
         await dbContext.SaveChangesAsync(cancellationToken);
     }
 }

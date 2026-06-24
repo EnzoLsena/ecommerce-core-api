@@ -25,6 +25,7 @@ public sealed class OrderItem
     public int Quantity { get; private set; }
     public decimal UnitPrice { get; private set; }
     public decimal Total => Quantity * UnitPrice;
+    public DateTime? DeletedAt { get; private set; }
 
     public Order Order { get; private set; } = null!;
     public Product Product { get; private set; } = null!;
@@ -35,6 +36,8 @@ public sealed class OrderItem
         Quantity = quantity;
         UnitPrice = unitPrice;
     }
+
+    internal void Delete() => DeletedAt ??= DateTime.UtcNow;
 
     private static void Validate(int quantity, decimal unitPrice)
     {

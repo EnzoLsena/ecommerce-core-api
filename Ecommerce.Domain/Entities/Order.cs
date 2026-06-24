@@ -28,6 +28,7 @@ public sealed class Order
     public IReadOnlyCollection<OrderItem> Items => _items.AsReadOnly();
     public DateTime CreatedAt { get; private set; }
     public DateTime UpdatedAt { get; private set; }
+    public DateTime? DeletedAt { get; private set; }
 
     public Customer Customer { get; private set; } = null!;
 
@@ -97,6 +98,8 @@ public sealed class Order
     }
 
     public bool CanBeChanged() => Status == OrderStatus.Started;
+
+    public void Delete() => DeletedAt ??= DateTime.UtcNow;
 
     private void EnsureCanBeChanged()
     {

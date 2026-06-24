@@ -12,6 +12,8 @@ public sealed class CustomerEntityTypeConfiguration : IEntityTypeConfiguration<C
 
         builder.HasKey(customer => customer.Id);
 
+        builder.HasQueryFilter(customer => customer.DeletedAt == null);
+
         builder.Property(customer => customer.Name)
             .HasMaxLength(150)
             .IsRequired();
@@ -21,7 +23,8 @@ public sealed class CustomerEntityTypeConfiguration : IEntityTypeConfiguration<C
             .IsRequired();
 
         builder.HasIndex(customer => customer.Email)
-            .IsUnique();
+            .IsUnique()
+            .HasFilter("[DeletedAt] IS NULL");
 
         builder.HasMany(customer => customer.Orders)
             .WithOne(order => order.Customer)

@@ -12,6 +12,8 @@ public sealed class ProductEntityTypeConfiguration : IEntityTypeConfiguration<Pr
 
         builder.HasKey(product => product.Id);
 
+        builder.HasQueryFilter(product => product.DeletedAt == null);
+
         builder.Property(product => product.Name)
             .HasMaxLength(200)
             .IsRequired();

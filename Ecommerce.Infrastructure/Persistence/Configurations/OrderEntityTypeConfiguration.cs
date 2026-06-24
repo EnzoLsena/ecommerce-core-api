@@ -12,6 +12,8 @@ public sealed class OrderEntityTypeConfiguration : IEntityTypeConfiguration<Orde
 
         builder.HasKey(order => order.Id);
 
+        builder.HasQueryFilter(order => order.DeletedAt == null);
+
         builder.Property(order => order.Status)
             .HasConversion<int>()
             .IsRequired();

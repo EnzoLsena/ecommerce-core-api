@@ -19,6 +19,7 @@ public sealed class Product
     public Guid Id { get; private set; }
     public string Name { get; private set; } = string.Empty;
     public decimal Price { get; private set; }
+    public DateTime? DeletedAt { get; private set; }
     public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();
 
     public void ChangeDetails(string name, decimal price)
@@ -35,4 +36,6 @@ public sealed class Product
         Name = name.Trim();
         Price = price;
     }
+
+    public void Delete() => DeletedAt ??= DateTime.UtcNow;
 }
