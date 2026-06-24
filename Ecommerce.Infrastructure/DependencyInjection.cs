@@ -1,4 +1,5 @@
 using Ecommerce.Application.Customers.Abstractions;
+using Ecommerce.Application.Orders.Abstractions;
 using Ecommerce.Application.Products.Abstractions;
 using Ecommerce.Infrastructure.Persistence;
 using Ecommerce.Infrastructure.Persistence.Mongo;
@@ -38,6 +39,8 @@ public static class DependencyInjection
         services.AddScoped<IProductReadStore, MongoProductReadStore>();
         services.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
         services.AddScoped<ICustomerReadStore, MongoCustomerReadStore>();
+        services.AddScoped<IOrderWriteRepository, OrderWriteRepository>();
+        services.AddScoped<IOrderReadStore, MongoOrderReadStore>();
 
         return services;
     }

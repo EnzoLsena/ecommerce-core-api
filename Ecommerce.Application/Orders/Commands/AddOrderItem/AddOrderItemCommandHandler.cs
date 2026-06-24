@@ -1,0 +1,50 @@
+using AutoMapper;
+using Ecommerce.Application.Orders.Abstractions;
+using Ecommerce.Application.Orders.Models;
+using MediatR;
+using Microsoft.Extensions.Logging;
+
+namespace Ecommerce.Application.Orders.Commands.AddOrderItem;
+
+public sealed class AddOrderItemCommandHandler(
+    IOrderWriteRepository writeRepository,
+    IOrderReadStore readStore,
+    IMapper mapper,
+    ILogger<AddOrderItemCommandHandler> logger) : IRequestHandler<AddOrderItemCommand, bool>
+{
+    public async Task<bool> Handle(
+        AddOrderItemCommand request,
+        CancellationToken cancellationToken)
+    {
+        var order = await writeRepository.GetByIdAsync(request.OrderId, cancellationToken);
+
+        if (order is null ||
+            !await writeRepository.ProductExistsAsync(request.ProductId, cancellationToken))
+        {
+            logger.LogWarning(
+                "Pedido {OrderId} ou produto {ProductId} não encontrado para inclusão do item",
+                request.OrderId,
+                request.ProductId);
+
+            return false;
+        }
+
+        order.AddItem(request.ProductId, request.Quantity, request.UnitPrice);
+        await writeRepository.UpdateAsync(order, cancellationToken);
+
+        var updatedOrder = await writeRepository.GetByIdAsync(order.Id, cancellationToken)
+            ?? throw new InvalidOperationException("O pedido atualizado não foi encontrado.");
+
+        await readStore.TryUpsertAsync(
+            mapper.Map<OrderReadModel>(updatedOrder),
+            cancellationToken);
+
+        logger.LogInformation(
+            "Produto {ProductId} adicionado ao pedido {OrderId} com quantidade {Quantity}",
+            request.ProductId,
+            order.Id,
+            request.Quantity);
+
+        return true;
+    }
+}

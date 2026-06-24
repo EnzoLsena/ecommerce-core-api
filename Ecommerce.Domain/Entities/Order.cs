@@ -99,7 +99,16 @@ public sealed class Order
 
     public bool CanBeChanged() => Status == OrderStatus.Started;
 
-    public void Delete() => DeletedAt ??= DateTime.UtcNow;
+    public void Delete()
+    {
+        if (DeletedAt.HasValue)
+            return;
+
+        DeletedAt = DateTime.UtcNow;
+
+        foreach (var item in _items)
+            item.Delete();
+    }
 
     private void EnsureCanBeChanged()
     {
