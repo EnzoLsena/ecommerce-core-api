@@ -26,6 +26,24 @@ public sealed class CreateOrderCommandHandler(
         }
 
         var order = new Order(request.CustomerId);
+
+        foreach (var item in request.Items)
+        {
+            var unitPrice = await writeRepository.GetProductPriceAsync(
+                item.ProductId,
+                cancellationToken);
+
+            if (!unitPrice.HasValue)
+            {
+                logger.LogWarning(
+                    "Produto {ProductId} não encontrado para criação do pedido",
+                    item.ProductId);
+                return null;
+            }
+
+            order.AddItem(item.ProductId, item.Quantity, unitPrice.Value);
+        }
+
         await writeRepository.AddAsync(order, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 

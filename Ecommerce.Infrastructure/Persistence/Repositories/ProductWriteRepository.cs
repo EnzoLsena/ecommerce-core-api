@@ -4,23 +4,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Infrastructure.Persistence.Repositories;
 
-public sealed class ProductWriteRepository(EcommerceDbContext dbContext)
+public sealed class ProductWriteRepository(EcommerceDbContext ecommerceDbContext)
     : IProductWriteRepository
 {
     public Task<Product?> GetByIdAsync(Guid id, CancellationToken cancellationToken) =>
-        dbContext.Products.SingleOrDefaultAsync(
+        ecommerceDbContext.Products.SingleOrDefaultAsync(
             product => product.Id == id,
             cancellationToken);
 
     public Task AddAsync(Product product, CancellationToken cancellationToken)
     {
-        dbContext.Products.Add(product);
+        ecommerceDbContext.Products.Add(product);
         return Task.CompletedTask;
     }
 
     public Task UpdateAsync(Product product, CancellationToken cancellationToken)
     {
-        dbContext.Products.Update(product);
+        ecommerceDbContext.Products.Update(product);
         return Task.CompletedTask;
     }
 

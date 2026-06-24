@@ -4,28 +4,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Infrastructure.Persistence.Repositories;
 
-public sealed class CustomerWriteRepository(EcommerceDbContext dbContext)
+public sealed class CustomerWriteRepository(EcommerceDbContext ecommerceDbContext)
     : ICustomerWriteRepository
 {
     public Task<Customer?> GetByIdAsync(Guid id, CancellationToken cancellationToken) =>
-        dbContext.Customers.SingleOrDefaultAsync(
+        ecommerceDbContext.Customers.SingleOrDefaultAsync(
             customer => customer.Id == id,
             cancellationToken);
 
     public Task<Customer?> GetByEmailAsync(string email, CancellationToken cancellationToken) =>
-        dbContext.Customers.SingleOrDefaultAsync(
+        ecommerceDbContext.Customers.SingleOrDefaultAsync(
             customer => customer.Email == email.Trim(),
             cancellationToken);
 
     public Task AddAsync(Customer customer, CancellationToken cancellationToken)
     {
-        dbContext.Customers.Add(customer);
+        ecommerceDbContext.Customers.Add(customer);
         return Task.CompletedTask;
     }
 
     public Task UpdateAsync(Customer customer, CancellationToken cancellationToken)
     {
-        dbContext.Customers.Update(customer);
+        ecommerceDbContext.Customers.Update(customer);
         return Task.CompletedTask;
     }
 

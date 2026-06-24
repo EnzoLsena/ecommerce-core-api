@@ -37,6 +37,8 @@ public sealed class OrderItem
         UnitPrice = unitPrice;
     }
 
+    internal void ChangeQuantity(int quantity) => Change(quantity, UnitPrice);
+
     internal void Delete() => DeletedAt ??= DateTime.UtcNow;
 
     private static void Validate(int quantity, decimal unitPrice)

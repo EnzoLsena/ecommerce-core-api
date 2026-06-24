@@ -66,14 +66,14 @@ public sealed class Order
         Touch();
     }
 
-    public void ChangeItem(Guid productId, int quantity, decimal unitPrice)
+    public void ChangeItem(Guid productId, int quantity)
     {
         EnsureCanBeChanged();
 
         var item = _items.SingleOrDefault(item => item.ProductId == productId)
             ?? throw new DomainException("Order item was not found.");
 
-        item.Change(quantity, unitPrice);
+        item.ChangeQuantity(quantity);
         RecalculateTotals();
         Touch();
     }
@@ -92,6 +92,9 @@ public sealed class Order
     {
         if (Status != OrderStatus.Started)
             throw new DomainException("Only started orders can be marked as processed.");
+
+        if (_items.Count == 0)
+            throw new DomainException("An order must have at least one product before it can be processed.");
 
         Status = OrderStatus.Processed;
         PaidAt = DateTime.UtcNow;

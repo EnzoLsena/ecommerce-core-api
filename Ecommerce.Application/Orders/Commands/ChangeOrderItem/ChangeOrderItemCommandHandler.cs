@@ -26,7 +26,7 @@ public sealed class ChangeOrderItemCommandHandler(
             return false;
         }
 
-        order.ChangeItem(request.ProductId, request.Quantity, request.UnitPrice);
+        order.ChangeItem(request.ProductId, request.Quantity);
         await writeRepository.UpdateAsync(order, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
         await readStore.TryUpsertAsync(

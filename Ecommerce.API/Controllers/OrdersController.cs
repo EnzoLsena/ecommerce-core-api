@@ -23,7 +23,11 @@ public sealed class OrdersController(ISender mediator) : ControllerBase
         CancellationToken cancellationToken)
     {
         var id = await mediator.Send(
-            new CreateOrderCommand(request.CustomerId),
+            new CreateOrderCommand(
+                request.CustomerId,
+                (request.Items ?? [])
+                    .Select(item => new CreateOrderItem(item.ProductId, item.Quantity))
+                    .ToArray()),
             cancellationToken);
 
         return id.HasValue
@@ -83,7 +87,7 @@ public sealed class OrdersController(ISender mediator) : ControllerBase
         CancellationToken cancellationToken)
     {
         var updated = await mediator.Send(
-            new AddOrderItemCommand(id, request.ProductId, request.Quantity, request.UnitPrice),
+            new AddOrderItemCommand(id, request.ProductId, request.Quantity),
             cancellationToken);
 
         return updated ? NoContent() : NotFound();
@@ -97,7 +101,7 @@ public sealed class OrdersController(ISender mediator) : ControllerBase
         CancellationToken cancellationToken)
     {
         var updated = await mediator.Send(
-            new ChangeOrderItemCommand(id, productId, request.Quantity, request.UnitPrice),
+            new ChangeOrderItemCommand(id, productId, request.Quantity),
             cancellationToken);
 
         return updated ? NoContent() : NotFound();
@@ -131,18 +135,19 @@ public sealed class OrdersController(ISender mediator) : ControllerBase
     }
 }
 
-public sealed record CreateOrderRequest(Guid CustomerId);
+public sealed record CreateOrderRequest(
+    Guid CustomerId,
+    IReadOnlyCollection<CreateOrderItemRequest>? Items);
+
+public sealed record CreateOrderItemRequest(Guid ProductId, int Quantity);
 
 public sealed record UpdateOrderCustomerRequest(Guid CustomerId);
 
 public sealed record AddOrderItemRequest(
     Guid ProductId,
-    int Quantity,
-    decimal UnitPrice);
+    int Quantity);
 
-public sealed record ChangeOrderItemRequest(
-    int Quantity,
-    decimal UnitPrice);
+public sealed record ChangeOrderItemRequest(int Quantity);
 
 public sealed class GetOrdersRequest
 {

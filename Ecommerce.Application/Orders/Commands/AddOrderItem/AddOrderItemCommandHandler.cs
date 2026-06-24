@@ -20,8 +20,11 @@ public sealed class AddOrderItemCommandHandler(
     {
         var order = await writeRepository.GetByIdAsync(request.OrderId, cancellationToken);
 
-        if (order is null ||
-            !await writeRepository.ProductExistsAsync(request.ProductId, cancellationToken))
+        var unitPrice = await writeRepository.GetProductPriceAsync(
+            request.ProductId,
+            cancellationToken);
+
+        if (order is null || !unitPrice.HasValue)
         {
             logger.LogWarning(
                 "Pedido {OrderId} ou produto {ProductId} não encontrado para inclusão do item",
@@ -31,7 +34,7 @@ public sealed class AddOrderItemCommandHandler(
             return false;
         }
 
-        order.AddItem(request.ProductId, request.Quantity, request.UnitPrice);
+        order.AddItem(request.ProductId, request.Quantity, unitPrice.Value);
         await writeRepository.UpdateAsync(order, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 

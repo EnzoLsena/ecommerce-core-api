@@ -6,7 +6,7 @@ public interface IOrderWriteRepository
 {
     Task<Order?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
     Task<bool> CustomerExistsAsync(Guid id, CancellationToken cancellationToken);
-    Task<bool> ProductExistsAsync(Guid id, CancellationToken cancellationToken);
+    Task<decimal?> GetProductPriceAsync(Guid id, CancellationToken cancellationToken);
     Task AddAsync(Order order, CancellationToken cancellationToken);
     Task UpdateAsync(Order order, CancellationToken cancellationToken);
     Task DeleteAsync(Order order, CancellationToken cancellationToken);
