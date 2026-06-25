@@ -1,4 +1,5 @@
-using Ecommerce.API.Dtos.Products;
+using Ecommerce.API.Requests.Products;
+using Ecommerce.API.Responses.Products;
 using Ecommerce.Application.Common.Models;
 using Ecommerce.Application.Products.Commands.CreateProduct;
 using Ecommerce.Application.Products.Commands.DeleteProduct;

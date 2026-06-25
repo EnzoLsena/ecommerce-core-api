@@ -1,8 +1,6 @@
-namespace Ecommerce.API.Dtos.Products;
+namespace Ecommerce.API.Requests.Products;
 
 public sealed record CreateProductRequest(string Name, decimal Price);
-
-public sealed record CreateProductResponse(Guid Id);
 
 public sealed record UpdateProductRequest(string Name, decimal Price);
 

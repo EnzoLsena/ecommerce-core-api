@@ -1,4 +1,4 @@
-using Ecommerce.API.Dtos.Health;
+using Ecommerce.API.Responses.Health;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce.API.Controllers;

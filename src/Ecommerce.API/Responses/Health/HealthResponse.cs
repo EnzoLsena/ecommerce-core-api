@@ -1,3 +1,3 @@
-namespace Ecommerce.API.Dtos.Health;
+namespace Ecommerce.API.Responses.Health;
 
 public sealed record HealthResponse(string Status);

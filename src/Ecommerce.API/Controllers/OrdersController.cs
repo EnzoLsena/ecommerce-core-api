@@ -1,4 +1,5 @@
-using Ecommerce.API.Dtos.Orders;
+using Ecommerce.API.Requests.Orders;
+using Ecommerce.API.Responses.Orders;
 using Ecommerce.Application.Common.Models;
 using Ecommerce.Application.Orders.Commands.AddOrderItem;
 using Ecommerce.Application.Orders.Commands.CancelOrder;

@@ -1,8 +1,6 @@
-namespace Ecommerce.API.Dtos.Customers;
+namespace Ecommerce.API.Requests.Customers;
 
 public sealed record CreateCustomerRequest(string Name, string Email);
-
-public sealed record CreateCustomerResponse(Guid Id);
 
 public sealed record UpdateCustomerRequest(string Name, string Email);
 

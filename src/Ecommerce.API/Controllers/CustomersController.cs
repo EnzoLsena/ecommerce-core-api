@@ -1,4 +1,5 @@
-using Ecommerce.API.Dtos.Customers;
+using Ecommerce.API.Requests.Customers;
+using Ecommerce.API.Responses.Customers;
 using Ecommerce.Application.Common.Models;
 using Ecommerce.Application.Customers.Commands.CreateCustomer;
 using Ecommerce.Application.Customers.Commands.DeleteCustomer;
