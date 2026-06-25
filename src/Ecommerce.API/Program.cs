@@ -3,8 +3,19 @@ using Ecommerce.API.ExceptionHandling;
 using Ecommerce.Infrastructure;
 using Ecommerce.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using Serilog.Context;
+using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, services, loggerConfiguration) =>
+{
+    loggerConfiguration
+        .ReadFrom.Configuration(context.Configuration)
+        .ReadFrom.Services(services)
+        .Enrich.FromLogContext();
+});
 
 builder.Services.AddControllers();
 builder.Services.AddExceptionHandler<ValidationExceptionHandler>();
@@ -45,6 +56,26 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.Use(async (context, next) =>
+{
+    var requestId = context.Request.Headers.TryGetValue("X-Request-Id", out var headerRequestId)
+        && !string.IsNullOrWhiteSpace(headerRequestId.ToString())
+            ? headerRequestId.ToString()
+            : context.TraceIdentifier;
+
+    var traceId = Activity.Current?.TraceId.ToString() ?? context.TraceIdentifier;
+
+    context.Response.Headers["X-Request-Id"] = requestId;
+
+    using (LogContext.PushProperty("RequestId", requestId))
+    using (LogContext.PushProperty("TraceId", traceId))
+    {
+        await next();
+    }
+});
+
+app.UseSerilogRequestLogging();
 
 app.UseExceptionHandler();
 
