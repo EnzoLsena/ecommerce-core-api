@@ -4,16 +4,17 @@ using MediatR;
 
 namespace Ecommerce.Application.Orders.Queries.GetOrders;
 
-public sealed record GetOrdersQuery(
-    int Page = 1,
-    int PageSize = 20,
-    string? Code = null,
-    decimal? MinTotalAmount = null,
-    decimal? MaxTotalAmount = null,
-    int? MinTotalItems = null,
-    int? MaxTotalItems = null,
-    DateTime? PaidFrom = null,
-    DateTime? PaidTo = null,
-    DateTime? CanceledFrom = null,
-    DateTime? CanceledTo = null)
-    : IRequest<PagedResult<OrderReadModel>>;
+public sealed class GetOrdersQuery : IRequest<PagedResult<OrderReadModel>>
+{
+    public int Page { get; init; } = 1;
+    public int PageSize { get; init; } = 20;
+    public string? Code { get; init; }
+    public decimal? MinTotalAmount { get; init; }
+    public decimal? MaxTotalAmount { get; init; }
+    public int? MinTotalItems { get; init; }
+    public int? MaxTotalItems { get; init; }
+    public DateTime? PaidFrom { get; init; }
+    public DateTime? PaidTo { get; init; }
+    public DateTime? CanceledFrom { get; init; }
+    public DateTime? CanceledTo { get; init; }
+}

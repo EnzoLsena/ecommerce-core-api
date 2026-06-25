@@ -64,23 +64,10 @@ public sealed class OrdersController : ControllerBase
     [HttpGet]
     [ProducesResponseType(typeof(PagedResult<OrderReadModel>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll(
-        [FromQuery] GetOrdersRequest request,
+        [FromQuery] GetOrdersQuery request,
         CancellationToken cancellationToken)
     {
-        var orders = await _mediator.Send(
-            new GetOrdersQuery(
-                request.Page,
-                request.PageSize,
-                request.Code,
-                request.MinTotalAmount,
-                request.MaxTotalAmount,
-                request.MinTotalItems,
-                request.MaxTotalItems,
-                request.PaidFrom,
-                request.PaidTo,
-                request.CanceledFrom,
-                request.CanceledTo),
-            cancellationToken);
+        var orders = await _mediator.Send(request, cancellationToken);
 
         return Ok(orders);
     }
