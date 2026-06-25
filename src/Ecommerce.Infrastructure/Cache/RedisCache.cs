@@ -1,6 +1,8 @@
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Ecommerce.Application.Common.Abstractions;
+using Ecommerce.Application.Common.Serialization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
@@ -9,7 +11,13 @@ namespace Ecommerce.Infrastructure.Cache;
 
 public sealed class RedisCache : ICache, IDisposable
 {
-    private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
+    private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web)
+    {
+        Converters =
+        {
+            new JsonStringEnumConverter(new UpperCaseJsonNamingPolicy())
+        }
+    };
 
     private readonly ConnectionMultiplexer _redis;
     private readonly IDatabase _database;
