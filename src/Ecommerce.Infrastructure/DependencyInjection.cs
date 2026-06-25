@@ -2,6 +2,7 @@ using Ecommerce.Application.Customers.Abstractions;
 using Ecommerce.Application.Common.Abstractions;
 using Ecommerce.Application.Orders.Abstractions;
 using Ecommerce.Application.Products.Abstractions;
+using Ecommerce.Infrastructure.Cache;
 using Ecommerce.Infrastructure.Persistence;
 using Ecommerce.Infrastructure.Persistence.Mongo;
 using Ecommerce.Infrastructure.Persistence.Repositories;
@@ -36,13 +37,16 @@ public static class DependencyInjection
             serviceProvider.GetRequiredService<IMongoClient>()
                 .GetDatabase(mongoDatabaseName));
 
+        services.AddSingleton<ICache, RedisCache>();
+
         services.AddScoped<IProductWriteRepository, ProductWriteRepository>();
         services.AddScoped<IProductReadStore, MongoProductReadStore>();
         services.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
         services.AddScoped<ICustomerReadStore, MongoCustomerReadStore>();
         services.AddScoped<IOrderWriteRepository, OrderWriteRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        services.AddScoped<IOrderReadStore, MongoOrderReadStore>();
+        services.AddScoped<MongoOrderReadStore>();
+        services.AddScoped<IOrderReadStore, CachedOrderReadStore>();
 
         return services;
     }

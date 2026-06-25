@@ -34,6 +34,18 @@ services:
       start_period: 10s
     restart: unless-stopped
 
+  redis:
+    image: redis:7.4-alpine
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    restart: unless-stopped
+
   api:
     build:
       context: .
@@ -45,12 +57,15 @@ services:
       ConnectionStrings__DefaultConnection: Server=sqlserver,1433;Database=Ecommerce;User Id=sa;Password=${MSSQL_SA_PASSWORD:-Ecommerce@123};TrustServerCertificate=True
       MongoDb__ConnectionString: mongodb://mongo:27017
       MongoDb__DatabaseName: EcommerceRead
+      Redis__ConnectionString: redis:6379
     ports:
       - "${API_PORT:-8080}:8080"
     depends_on:
       sqlserver:
         condition: service_healthy
       mongo:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     restart: unless-stopped
 
