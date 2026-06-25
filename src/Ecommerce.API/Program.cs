@@ -22,17 +22,7 @@ builder.Services.AddExceptionHandler<ValidationExceptionHandler>();
 builder.Services.AddExceptionHandler<DomainExceptionHandler>();
 builder.Services.AddProblemDetails();
 
-builder.Services.AddEndpointsApiExplorer();
-
-builder.Services.AddSwaggerGen(options =>
-{
-    options.SwaggerDoc("v1", new()
-    {
-        Title = "Ecommerce API",
-        Version = "v1",
-        Description = "API de ecommerce"
-    });
-});
+builder.Services.AddOpenApi("v1");
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
@@ -48,10 +38,10 @@ if (builder.Configuration.GetValue<bool>("Database:ApplyMigrations"))
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
+    app.MapOpenApi("/openapi/{documentName}.json");
     app.UseSwaggerUI(options =>
     {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Ecommerce API v1");
+        options.SwaggerEndpoint("/openapi/v1.json", "Ecommerce API v1");
     });
 }
 
